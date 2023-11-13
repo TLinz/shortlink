@@ -35,6 +35,14 @@
         <guava.version>30.0-jre</guava.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!-- 不会实际下载依赖，只会规约版本 -->
     <dependencyManagement>
         <dependencies>
             <dependency>
