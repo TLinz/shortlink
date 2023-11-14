@@ -2,7 +2,7 @@ package org.linzzxz.shortlink.admin.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.linzzxz.shortlink.admin.common.convention.result.Result;
-import org.linzzxz.shortlink.admin.common.enums.UserErrorCodeEnum;
+import org.linzzxz.shortlink.admin.common.convention.result.Results;
 import org.linzzxz.shortlink.admin.dto.resp.UserRespDTO;
 import org.linzzxz.shortlink.admin.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +26,11 @@ public class UserController {
     @GetMapping("/api/shortlink/v1/user/{username}")
     public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username) {
         UserRespDTO result = userService.getUserByUsername(username);
-        if (result == null) {
-            return new Result<UserRespDTO>().setCode(UserErrorCodeEnum.USER_NULL.code()).setMessage(UserErrorCodeEnum.USER_NULL.message());
-        } else {
-            return new Result<UserRespDTO>().setCode("0").setData(result);
-        }
+//        if (result == null) {
+//            return new Result<UserRespDTO>().setCode(UserErrorCodeEnum.USER_NULL.code()).setMessage(UserErrorCodeEnum.USER_NULL.message());
+//        } else {
+//            return Results.success(result);
+//        }
+        return Results.success(result);
     }
 }
