@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.linzzxz.shortlink.admin.common.convention.result.Result;
 import org.linzzxz.shortlink.admin.common.convention.result.Results;
 import org.linzzxz.shortlink.admin.dto.req.UserRegisterReqDTO;
+import org.linzzxz.shortlink.admin.dto.req.UserUpdateReqDTO;
 import org.linzzxz.shortlink.admin.dto.resp.UserRespDTO;
 import org.linzzxz.shortlink.admin.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,15 @@ public class UserController {
     @PostMapping("/api/short-link/v1/user")
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam) {
         userService.register(requestParam);
+        return Results.success();
+    }
+
+    /**
+     * 修改用户信息
+     */
+    @PutMapping("/api/short-link/v1/user")
+    public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam) {
+        userService.update(requestParam);
         return Results.success();
     }
 }
