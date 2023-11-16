@@ -25,16 +25,16 @@ public class UserController {
     /**
      * 根据用户名查询用户信息
      */
-    @GetMapping("/api/short-link/v1/user/{username}")
-    public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username) {
+    @GetMapping("/api/short-link/v1/user")
+    public Result<UserRespDTO> getUserByUsername(@RequestParam("username") String username) {
         return Results.success(userService.getUserByUsername(username));
     }
 
     /**
      * 查询用户是否存在
      */
-    @GetMapping("/api/short-link/v1/user/has-username/{username}")
-    public Result<Boolean> hasUsername(@PathVariable("username") String username) {
+    @GetMapping("/api/short-link/v1/user/has-username")
+    public Result<Boolean> hasUsername(@RequestParam("username") String username) {
         return Results.success(userService.hasUserName(username));
     }
 
