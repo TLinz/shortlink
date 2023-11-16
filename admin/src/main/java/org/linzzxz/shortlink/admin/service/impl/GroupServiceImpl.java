@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.linzzxz.shortlink.admin.common.biz.user.UserContext;
 import org.linzzxz.shortlink.admin.dao.entity.GroupDO;
 import org.linzzxz.shortlink.admin.dao.mapper.GroupMapper;
+import org.linzzxz.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDTO;
 import org.linzzxz.shortlink.admin.dto.resp.ShortLinkGroupRespDTO;
 import org.linzzxz.shortlink.admin.service.GroupService;
 import org.linzzxz.shortlink.admin.toolkit.RandomGenerator;
@@ -48,6 +49,17 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDO> implemen
                 .orderByDesc(GroupDO::getSortOrder, GroupDO::getUpdateTime);
         List<GroupDO> groupDOList = baseMapper.selectList(queryWrapper);
         return BeanUtil.copyToList(groupDOList, ShortLinkGroupRespDTO.class);
+    }
+
+    @Override
+    public void updateGroup(ShortLinkGroupUpdateReqDTO requestParam) {
+        LambdaQueryWrapper<GroupDO> updateWrapper = Wrappers.lambdaQuery(GroupDO.class)
+                .eq(GroupDO::getUsername, UserContext.getUsername())
+                .eq(GroupDO::getGid, requestParam.getGid())
+                .eq(GroupDO::getDelFlag, 0);
+        GroupDO groupDO = new GroupDO();
+        groupDO.setName(requestParam.getName());
+        baseMapper.update(groupDO, updateWrapper);
     }
 
     /**
