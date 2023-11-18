@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.linzzxz.shortlink.admin.common.convention.exception.ClientException;
 import org.linzzxz.shortlink.admin.common.enums.UserErrorCodeEnum;
 import org.linzzxz.shortlink.admin.dao.entity.UserDO;
@@ -20,6 +21,7 @@ import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +29,12 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static org.linzzxz.shortlink.admin.common.constant.RedisCacheConstant.LOCK_USER_REGISTER_KEY;
-import static org.linzzxz.shortlink.admin.common.enums.UserErrorCodeEnum.USER_NAME_EXIST;
-import static org.linzzxz.shortlink.admin.common.enums.UserErrorCodeEnum.USER_SAVE_ERROR;
+import static org.linzzxz.shortlink.admin.common.enums.UserErrorCodeEnum.*;
 
 /**
  * 用户接口实现层
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements UserService {
@@ -69,9 +71,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDO> implements 
         try {
             if (lock.tryLock()) {
                 // 有getter/setter方法的对象即可视为java的Bean对象
-                int inserted = baseMapper.insert(BeanUtil.toBean(requestParam, UserDO.class));
-                if (inserted < 1) {
-                    throw new ClientException(USER_SAVE_ERROR);
+                try {
+                    int inserted = baseMapper.insert(BeanUtil.toBean(requestParam, UserDO.class));
+                    if (inserted < 1) {
+                        throw new ClientException(USER_SAVE_ERROR);
+                    }
+                } catch (DuplicateKeyException ex) {
+                    log.warn("重复注册相同用户：{}", requestParam.getUsername());
+                    throw new ClientException(USER_EXIST);
                 }
                 userRegisterCachePenetrationBloomFilter.add(requestParam.getUsername());
                 return;

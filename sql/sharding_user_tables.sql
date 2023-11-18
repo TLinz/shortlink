@@ -9,7 +9,8 @@ CREATE TABLE `t_user_0` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_1` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -22,7 +23,8 @@ CREATE TABLE `t_user_1` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_2` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -35,7 +37,8 @@ CREATE TABLE `t_user_2` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_3` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -48,7 +51,8 @@ CREATE TABLE `t_user_3` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_4` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -61,7 +65,8 @@ CREATE TABLE `t_user_4` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_5` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -74,7 +79,8 @@ CREATE TABLE `t_user_5` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_6` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -87,7 +93,8 @@ CREATE TABLE `t_user_6` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_7` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -100,7 +107,8 @@ CREATE TABLE `t_user_7` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_8` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -113,7 +121,8 @@ CREATE TABLE `t_user_8` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_9` (
                             `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -126,7 +135,8 @@ CREATE TABLE `t_user_9` (
                             `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_10` (
                              `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -139,7 +149,8 @@ CREATE TABLE `t_user_10` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                              `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                             PRIMARY KEY (`id`)
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_11` (
                              `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -152,7 +163,8 @@ CREATE TABLE `t_user_11` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                              `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                             PRIMARY KEY (`id`)
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_12` (
                              `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -165,7 +177,8 @@ CREATE TABLE `t_user_12` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                              `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                             PRIMARY KEY (`id`)
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_13` (
                              `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -178,7 +191,8 @@ CREATE TABLE `t_user_13` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                              `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                             PRIMARY KEY (`id`)
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_14` (
                              `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -191,7 +205,8 @@ CREATE TABLE `t_user_14` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                              `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                             PRIMARY KEY (`id`)
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 CREATE TABLE `t_user_15` (
                              `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -204,5 +219,6 @@ CREATE TABLE `t_user_15` (
                              `update_time` datetime DEFAULT NULL COMMENT '修改时间',
                              `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                              `deletion_time` bigint DEFAULT NULL COMMENT '注销时间戳',
-                             PRIMARY KEY (`id`)
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
