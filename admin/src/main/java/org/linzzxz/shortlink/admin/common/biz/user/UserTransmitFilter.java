@@ -24,8 +24,8 @@ public class UserTransmitFilter implements Filter {
     private final StringRedisTemplate stringRedisTemplate;
 
     private static final List<String> IGNORE_URI = Lists.newArrayList(
-            "/api/short-link/v1/user/login",
-            "/api/short-link/v1/user/has-username"
+            "/api/short-link/admin/v1/user/login",
+            "/api/short-link/admin/v1/user/has-username"
     );
 
     // TODO 目前Controller全局异常拦截器无法拦截filter异常，token不正确会导致前端返回服务器内部异常500，后续集成网关解决该问题
