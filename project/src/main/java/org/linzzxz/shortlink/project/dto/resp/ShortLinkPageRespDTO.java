@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 短链接分页返回参数
+ * 短链接分页返回响应
  */
 @Data
 public class ShortLinkPageRespDTO {
