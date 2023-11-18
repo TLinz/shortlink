@@ -11,11 +11,15 @@ import org.linzzxz.shortlink.admin.dao.mapper.GroupMapper;
 import org.linzzxz.shortlink.admin.dto.req.ShortLinkGroupSortReqDTO;
 import org.linzzxz.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDTO;
 import org.linzzxz.shortlink.admin.dto.resp.ShortLinkGroupRespDTO;
+import org.linzzxz.shortlink.admin.remote.dto.ShortLinkRemoteService;
+import org.linzzxz.shortlink.admin.remote.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import org.linzzxz.shortlink.admin.service.GroupService;
 import org.linzzxz.shortlink.admin.toolkit.RandomGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 短链接分组接口实现层
@@ -23,6 +27,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDO> implements GroupService {
+
+    // TODO 后续重构为SpringCloud Feign调用
+    ShortLinkRemoteService shortLinkRemoteService = new ShortLinkRemoteService() {};
 
     @Override
     public void saveGroup(String groupName) {
@@ -49,7 +56,12 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDO> implemen
                 .eq(GroupDO::getUsername, UserContext.getUsername())
                 .orderByDesc(GroupDO::getSortOrder, GroupDO::getUpdateTime);
         List<GroupDO> groupDOList = baseMapper.selectList(queryWrapper);
-        return BeanUtil.copyToList(groupDOList, ShortLinkGroupRespDTO.class);
+        List<ShortLinkGroupCountQueryRespDTO> listResult = shortLinkRemoteService
+                .listGroupShortLinkCount(groupDOList.stream().map(GroupDO::getGid).toList()).getData();
+        List<ShortLinkGroupRespDTO> results = BeanUtil.copyToList(groupDOList, ShortLinkGroupRespDTO.class);
+        Map<String, Integer> counts = listResult.stream()
+                .collect(Collectors.toMap(ShortLinkGroupCountQueryRespDTO::getGid, ShortLinkGroupCountQueryRespDTO::getShortLinkCount));
+        return results.stream().peek(result -> result.setShortLinkCount(counts.get(result.getGid()))).toList();
     }
 
     @Override
