@@ -1,7 +1,10 @@
 package org.linzzxz.shortlink.project.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.linzzxz.shortlink.project.common.database.BaseDO;
 
 import java.util.Date;
@@ -11,6 +14,9 @@ import java.util.Date;
  */
 @Data
 @TableName("t_link")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShortLinkDO extends BaseDO {
 
     /**
