@@ -29,6 +29,7 @@ import org.linzzxz.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import org.linzzxz.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import org.linzzxz.shortlink.project.service.ShortLinkService;
 import org.linzzxz.shortlink.project.toolkit.HashUtil;
+import org.linzzxz.shortlink.project.toolkit.LinkUtil;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -97,7 +98,10 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
                     .eq(ShortLinkDO::getEnableStatus, 0);
             ShortLinkDO shortLinkDO = baseMapper.selectOne(queryWrapper);
             if (shortLinkDO != null) {
-                stringRedisTemplate.opsForValue().set(String.format(GOTO_SHORT_LINK_KEY, fullShortUrl), shortLinkDO.getOriginUrl());
+                stringRedisTemplate.opsForValue().set(
+                        String.format(GOTO_SHORT_LINK_KEY, fullShortUrl),
+                        shortLinkDO.getOriginUrl(),
+                        LinkUtil.getLinkCacheValidDate(shortLinkDO.getValidDate()), TimeUnit.MILLISECONDS);
                 response.sendRedirect(shortLinkDO.getOriginUrl());
             }
         } finally {
@@ -136,6 +140,10 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
             log.warn("短链接：{} 重复入库", fullShortUrl);
             throw new ServiceException("短链接生成重复，请稍后再试");
         }
+        stringRedisTemplate.opsForValue().set(
+                String.format(GOTO_SHORT_LINK_KEY, fullShortUrl),
+                shortLinkDO.getOriginUrl(),
+                LinkUtil.getLinkCacheValidDate(requestParam.getValidDate()), TimeUnit.MILLISECONDS);
         shortUriCreateCachePenetrationBloomFilter.add(fullShortUrl);
         return ShortLinkCreateRespDTO.builder()
                 .fullShortUrl("http://" + shortLinkDO.getFullShortUrl())
