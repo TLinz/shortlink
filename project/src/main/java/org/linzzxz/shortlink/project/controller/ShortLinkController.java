@@ -1,6 +1,8 @@
 package org.linzzxz.shortlink.project.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.linzzxz.shortlink.project.common.convention.result.Result;
 import org.linzzxz.shortlink.project.common.convention.result.Results;
@@ -11,6 +13,7 @@ import org.linzzxz.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 import org.linzzxz.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import org.linzzxz.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import org.linzzxz.shortlink.project.service.ShortLinkService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +28,14 @@ public class ShortLinkController {
     private final ShortLinkService shortLinkService;
 
     /**
+     * 短链接跳转
+     */
+    @GetMapping("/{short-uri}")
+    public void restoreUrl(@PathVariable("short-uri") String shortUri, HttpServletRequest request, HttpServletResponse response) {
+        shortLinkService.restoreUrl(shortUri, request, response);
+    }
+
+    /**
      * 创建短链接
      */
     @PostMapping("/api/short-link/v1/create")
@@ -32,6 +43,9 @@ public class ShortLinkController {
         return Results.success(shortLinkService.createShortLink(requestParam));
     }
 
+    /**
+     * 修改短链接
+     */
     @PostMapping("/api/short-link/v1/update")
     public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
         shortLinkService.updateShortLink(requestParam);

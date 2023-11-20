@@ -2,6 +2,8 @@ package org.linzzxz.shortlink.project.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.linzzxz.shortlink.project.dao.entity.ShortLinkDO;
 import org.linzzxz.shortlink.project.dto.req.ShortLinkCreateReqDTO;
 import org.linzzxz.shortlink.project.dto.req.ShortLinkPageReqDTO;
@@ -16,6 +18,15 @@ import java.util.List;
  * 短链接接口层
  */
 public interface ShortLinkService extends IService<ShortLinkDO> {
+
+    /**
+     * 短链接跳转
+     *
+     * @param shortUri 短链接后缀
+     * @param request 请求
+     * @param response 响应
+     */
+    void restoreUrl(String shortUri, HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 创建短链接
