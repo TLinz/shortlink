@@ -6,6 +6,7 @@ import org.linzzxz.shortlink.project.common.convention.result.Result;
 import org.linzzxz.shortlink.project.common.convention.result.Results;
 import org.linzzxz.shortlink.project.dto.req.ShortLinkCreateReqDTO;
 import org.linzzxz.shortlink.project.dto.req.ShortLinkPageReqDTO;
+import org.linzzxz.shortlink.project.dto.req.ShortLinkUpdateReqDTO;
 import org.linzzxz.shortlink.project.dto.resp.ShortLinkCreateRespDTO;
 import org.linzzxz.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import org.linzzxz.shortlink.project.dto.resp.ShortLinkPageRespDTO;
@@ -29,6 +30,12 @@ public class ShortLinkController {
     @PostMapping("/api/short-link/v1/create")
     public Result<ShortLinkCreateRespDTO> createShortLink(@RequestBody ShortLinkCreateReqDTO requestParam) {
         return Results.success(shortLinkService.createShortLink(requestParam));
+    }
+
+    @PostMapping("/api/short-link/v1/update")
+    public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
+        shortLinkService.updateShortLink(requestParam);
+        return Results.success();
     }
 
     /**
