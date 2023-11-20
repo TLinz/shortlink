@@ -10,3 +10,7 @@ spring:
     data:
         redis:
             host: 127.0.0.1
+    mvc:
+        view:
+            prefix: /templates/
+            suffix: .html
