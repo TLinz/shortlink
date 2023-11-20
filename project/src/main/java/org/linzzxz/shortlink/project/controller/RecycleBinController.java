@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.linzzxz.shortlink.project.common.convention.result.Result;
 import org.linzzxz.shortlink.project.common.convention.result.Results;
 import org.linzzxz.shortlink.project.dto.req.RecycleBinSaveReqDTO;
-import org.linzzxz.shortlink.project.dto.req.ShortLinkPageReqDTO;
+import org.linzzxz.shortlink.project.dto.req.ShortLinkRecyclePageReqDTO;
 import org.linzzxz.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import org.linzzxz.shortlink.project.service.RecycleBinService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +36,7 @@ public class RecycleBinController {
      * 分页查询回收站短链接
      */
     @GetMapping("/api/short-link/v1/recycle-bin/page")
-    public Result<IPage<ShortLinkPageRespDTO>> pageShortLink(ShortLinkPageReqDTO requestParam) {
+    public Result<IPage<ShortLinkPageRespDTO>> pageShortLink(ShortLinkRecyclePageReqDTO requestParam) {
         return Results.success(recycleBinService.pageShortLink(requestParam));
     }
 }
