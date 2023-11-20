@@ -1,12 +1,12 @@
-package org.linzzxz.shortlink.admin.dto.req;
+package org.linzzxz.shortlink.admin.remote.dto.req;
 
 import lombok.Data;
 
 /**
- * 回收站恢复短链接请求参数
+ * 回收站移除短链接
  */
 @Data
-public class RecycleBinRecoverReqDTO {
+public class RecycleBinRemoveReqDTO {
 
     /**
      * 分组标识
