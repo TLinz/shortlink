@@ -1,6 +1,8 @@
 package org.linzzxz.shortlink.project.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.Week;
 import cn.hutool.core.text.StrBuilder;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -17,8 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.linzzxz.shortlink.project.common.convention.exception.ClientException;
 import org.linzzxz.shortlink.project.common.convention.exception.ServiceException;
 import org.linzzxz.shortlink.project.common.enums.ValidDateTypeEnum;
+import org.linzzxz.shortlink.project.dao.entity.LinkAccessStatsDO;
 import org.linzzxz.shortlink.project.dao.entity.ShortLinkDO;
 import org.linzzxz.shortlink.project.dao.entity.ShortLinkGotoDO;
+import org.linzzxz.shortlink.project.dao.mapper.LinkAccessStatsMapper;
 import org.linzzxz.shortlink.project.dao.mapper.ShortLinkGotoMapper;
 import org.linzzxz.shortlink.project.dao.mapper.ShortLinkMapper;
 import org.linzzxz.shortlink.project.dto.req.ShortLinkCreateReqDTO;
@@ -58,6 +62,7 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
     private final ShortLinkGotoMapper shortLinkGotoMapper;
     private final StringRedisTemplate stringRedisTemplate;
     private final RedissonClient redissonClient;
+    private final LinkAccessStatsMapper linkAccessStatsMapper;
 
     @SneakyThrows
     @Override
@@ -66,6 +71,7 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
         String fullShortUrl = serverName + "/" + shortUri;
         String cachedLink = stringRedisTemplate.opsForValue().get(String.format(GOTO_SHORT_LINK_KEY, fullShortUrl));
         if (StrUtil.isNotBlank(cachedLink)) {
+            shortLinkStats(fullShortUrl, null, request, response);
             response.sendRedirect(cachedLink);
             return;
         }
@@ -84,6 +90,7 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
         try {
             cachedLink = stringRedisTemplate.opsForValue().get(String.format(GOTO_SHORT_LINK_KEY, fullShortUrl));
             if (StrUtil.isNotBlank(cachedLink)) {
+                shortLinkStats(fullShortUrl, null, request, response);
                 response.sendRedirect(cachedLink);
                 return;
             }
@@ -110,9 +117,37 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
                     String.format(GOTO_SHORT_LINK_KEY, fullShortUrl),
                     shortLinkDO.getOriginUrl(),
                     LinkUtil.getLinkCacheValidDate(shortLinkDO.getValidDate()), TimeUnit.MILLISECONDS);
+            shortLinkStats(fullShortUrl, shortLinkDO.getGid(), request, response);
             response.sendRedirect(shortLinkDO.getOriginUrl());
         } finally {
             lock.unlock();
+        }
+    }
+
+    private void shortLinkStats(String fullShortUrl, String gid, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if (StrUtil.isBlank(gid)) {
+                LambdaQueryWrapper<ShortLinkGotoDO> gotoQueryWrapper = Wrappers.lambdaQuery(ShortLinkGotoDO.class)
+                        .eq(ShortLinkGotoDO::getFullShortUrl, fullShortUrl);
+                ShortLinkGotoDO shortLinkGotoDO = shortLinkGotoMapper.selectOne(gotoQueryWrapper);
+                gid = shortLinkGotoDO.getGid();
+            }
+            int hour = DateUtil.hour(new Date(), true);
+            Week week = DateUtil.dayOfWeekEnum(new Date());
+            int weekValue = week.getIso8601Value();
+            LinkAccessStatsDO linkAccessStatsDO = LinkAccessStatsDO.builder()
+                    .pv(1)
+                    .uv(1)
+                    .uip(1)
+                    .date(new Date())
+                    .weekday(weekValue)
+                    .hour(hour)
+                    .gid(gid)
+                    .fullShortUrl(fullShortUrl)
+                    .build();
+            linkAccessStatsMapper.shortLinkStats(linkAccessStatsDO);
+        } catch (Throwable ex) {
+            log.error("短链接访问量统计异常");
         }
     }
 

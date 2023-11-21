@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.linzzxz.shortlink.project.common.database.BaseDO;
 
 /**
  * 短链接跳转实体
@@ -15,7 +14,7 @@ import org.linzzxz.shortlink.project.common.database.BaseDO;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShortLinkGotoDO extends BaseDO {
+public class ShortLinkGotoDO {
 
     /**
      * ID
